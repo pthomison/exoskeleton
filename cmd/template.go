@@ -43,6 +43,9 @@ func run(cmd *cobra.Command, args []string) {
 	template, err := template.ParseFiles(templateArgs.Input)
 	utils.Check(err)
 
+	templateInfo, err := os.Stat(templateArgs.Input)
+	utils.Check(err)
+
 	varBytes, err := os.ReadFile(templateArgs.VariableFile)
 	utils.Check(err)
 
@@ -56,7 +59,7 @@ func run(cmd *cobra.Command, args []string) {
 	err = template.Execute(&templateBytes, varData)
 	utils.Check(err)
 
-	err = os.WriteFile(templateArgs.Output, templateBytes.Bytes(), 0666)
+	err = os.WriteFile(templateArgs.Output, templateBytes.Bytes(), templateInfo.Mode().Perm())
 	utils.Check(err)
 
 }
