@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"bytes"
 	"fmt"
 	"os"
 	"text/template"
@@ -40,26 +39,34 @@ func init() {
 func run(cmd *cobra.Command, args []string) {
 	fmt.Printf("Templating %s with %s into %s\n", templateArgs.Input, templateArgs.VariableFile, templateArgs.Output)
 
-	template, err := template.ParseFiles(templateArgs.Input)
+	fmt.Println("4")
+
+	// templateInfo, err := os.Stat(templateArgs.Input)
+	// utils.Check(err)
+
+	fmt.Println("3")
+
+	template, err := template.ParseGlob(templateArgs.Input)
 	utils.Check(err)
 
-	templateInfo, err := os.Stat(templateArgs.Input)
-	utils.Check(err)
+	fmt.Println("1")
 
 	varBytes, err := os.ReadFile(templateArgs.VariableFile)
 	utils.Check(err)
+
+	fmt.Println("2")
 
 	varData := make(map[interface{}]interface{})
 
 	err = yaml.Unmarshal(varBytes, &varData)
 	utils.Check(err)
 
-	var templateBytes bytes.Buffer
+	// var templateBytes bytes.Buffer
 
-	err = template.Execute(&templateBytes, varData)
+	err = template.Execute(os.Stdout, varData)
 	utils.Check(err)
 
-	err = os.WriteFile(templateArgs.Output, templateBytes.Bytes(), templateInfo.Mode().Perm())
-	utils.Check(err)
+	// err = os.WriteFile(templateArgs.Output, templateBytes.Bytes(), templateInfo.Mode().Perm())
+	// utils.Check(err)
 
 }
