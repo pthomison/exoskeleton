@@ -12,4 +12,7 @@ release:
 	goreleaser release --rm-dist
 
 test:
-	go test
+	go test ./... -v
+
+delve-test:
+	dlv test ./cmd

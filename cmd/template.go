@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"text/template"
@@ -17,7 +18,7 @@ var (
 		Use:   "template",
 		Short: "Template Utility",
 		Long:  `template dir + yaml vars = magic`,
-		Run:   run,
+		Run:   cobraRun,
 	}
 )
 
@@ -26,6 +27,8 @@ type TemplateArguments struct {
 	Output       string
 	VariableFile string
 }
+
+type UnstructureVariableData map[interface{}]interface{}
 
 func init() {
 	rootCmd.AddCommand(templateCmd)
@@ -36,37 +39,46 @@ func init() {
 
 }
 
-func run(cmd *cobra.Command, args []string) {
-	fmt.Printf("Templating %s with %s into %s\n", templateArgs.Input, templateArgs.VariableFile, templateArgs.Output)
+func cobraRun(cmd *cobra.Command, args []string) {
+	Run(templateArgs)
+}
 
-	fmt.Println("4")
+func Run(args *TemplateArguments) {
+	fmt.Printf("Templating %s with %s into %s\n", args.Input, args.VariableFile, args.Output)
 
-	// templateInfo, err := os.Stat(templateArgs.Input)
-	// errcheck.Check(err)
+	variableData := ReadVariableFile(args)
 
-	fmt.Println("3")
-
-	template, err := template.ParseGlob(templateArgs.Input)
+	inputStat, err := os.Stat(args.Input)
 	errcheck.Check(err)
 
-	fmt.Println("1")
+	if !inputStat.IsDir() {
+		TemplateFile(args.Input, args.Output, variableData, inputStat.Mode())
+	} else {
+		fmt.Println("dir")
+	}
+}
 
-	varBytes, err := os.ReadFile(templateArgs.VariableFile)
+func ReadVariableFile(args *TemplateArguments) UnstructureVariableData {
+	varBytes, err := os.ReadFile(args.VariableFile)
 	errcheck.Check(err)
 
-	fmt.Println("2")
-
-	varData := make(map[interface{}]interface{})
+	varData := make(UnstructureVariableData)
 
 	err = yaml.Unmarshal(varBytes, &varData)
 	errcheck.Check(err)
 
-	// var templateBytes bytes.Buffer
+	return varData
+}
 
-	err = template.Execute(os.Stdout, varData)
+func TemplateFile(infile string, outfile string, varData UnstructureVariableData, outperm os.FileMode) {
+	template, err := template.ParseFiles(infile)
 	errcheck.Check(err)
 
-	// err = os.WriteFile(templateArgs.Output, templateBytes.Bytes(), templateInfo.Mode().Perm())
-	// errcheck.Check(err)
+	outputBuffer := &bytes.Buffer{}
 
+	err = template.Execute(outputBuffer, varData)
+	errcheck.Check(err)
+
+	err = os.WriteFile(outfile, outputBuffer.Bytes(), outperm)
+	errcheck.Check(err)
 }
