@@ -5,7 +5,7 @@ import (
 	"os"
 	"text/template"
 
-	utils "github.com/pthomison/golang-utils"
+	"github.com/pthomison/errcheck"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )
@@ -42,31 +42,31 @@ func run(cmd *cobra.Command, args []string) {
 	fmt.Println("4")
 
 	// templateInfo, err := os.Stat(templateArgs.Input)
-	// utils.Check(err)
+	// errcheck.Check(err)
 
 	fmt.Println("3")
 
 	template, err := template.ParseGlob(templateArgs.Input)
-	utils.Check(err)
+	errcheck.Check(err)
 
 	fmt.Println("1")
 
 	varBytes, err := os.ReadFile(templateArgs.VariableFile)
-	utils.Check(err)
+	errcheck.Check(err)
 
 	fmt.Println("2")
 
 	varData := make(map[interface{}]interface{})
 
 	err = yaml.Unmarshal(varBytes, &varData)
-	utils.Check(err)
+	errcheck.Check(err)
 
 	// var templateBytes bytes.Buffer
 
 	err = template.Execute(os.Stdout, varData)
-	utils.Check(err)
+	errcheck.Check(err)
 
 	// err = os.WriteFile(templateArgs.Output, templateBytes.Bytes(), templateInfo.Mode().Perm())
-	// utils.Check(err)
+	// errcheck.Check(err)
 
 }
