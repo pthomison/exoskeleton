@@ -1,44 +1,74 @@
 package cmd
 
-import (
-	"errors"
-	"io/fs"
-	"os"
-	"testing"
+// import (
+// 	"errors"
+// 	"io/fs"
+// 	"os"
+// 	"testing"
 
-	"github.com/pthomison/errcheck"
-)
+// 	"github.com/pthomison/errcheck"
+// )
 
-const (
-	templateOutput = "console.log(\"alpha + beta\");"
-)
+// const (
+// 	templateOutput = "console.log(\"alpha + beta\");"
+// )
 
-func TestTemplate(t *testing.T) {
-	input := "../examples/cool-code-file.template.js"
-	output := "../examples/cool-code.output"
-	variableFile := "../examples/variables.yaml"
+// func TestTemplateFile(t *testing.T) {
+// 	input := "../examples/cool-code-file.template.js"
+// 	output := "../examples/cool-code.output"
+// 	variableFile := "../examples/variables.yaml"
 
-	err := os.Remove(output)
+// 	err := os.Remove(output)
 
-	var pathError *fs.PathError
-	if (err != nil) && (!errors.As(err, &pathError)) {
-		errcheck.CheckTest(err, t)
-	}
+// 	var pathError *fs.PathError
+// 	if (err != nil) && (!errors.As(err, &pathError)) {
+// 		errcheck.CheckTest(err, t)
+// 	}
 
-	Run(&TemplateArguments{
-		Input:        input,
-		Output:       output,
-		VariableFile: variableFile,
-	})
+// 	Run(&TemplateArguments{
+// 		Input:        input,
+// 		Output:       output,
+// 		VariableFile: variableFile,
+// 	})
 
-	outputBytes, err := os.ReadFile(output)
-	errcheck.CheckTest(err, t)
+// 	outputBytes, err := os.ReadFile(output)
+// 	errcheck.CheckTest(err, t)
 
-	if string(outputBytes) != templateOutput {
-		errcheck.CheckTest(errors.New("template output doesn't match the valid output"), t)
+// 	if string(outputBytes) != templateOutput {
+// 		errcheck.CheckTest(errors.New("template output doesn't match the valid output"), t)
 
-	}
+// 	}
 
-	err = os.Remove(output)
-	errcheck.CheckTest(err, t)
-}
+// 	err = os.Remove(output)
+// 	errcheck.CheckTest(err, t)
+// }
+
+// // func TestTemplateFolder(t *testing.T) {
+// // 	input := "../examples"
+// // 	output := "../examples2"
+// // 	variableFile := "../examples/variables.yaml"
+
+// // 	err := os.Remove(output)
+
+// // 	var pathError *fs.PathError
+// // 	if (err != nil) && (!errors.As(err, &pathError)) {
+// // 		errcheck.CheckTest(err, t)
+// // 	}
+
+// // 	Run(&TemplateArguments{
+// // 		Input:        input,
+// // 		Output:       output,
+// // 		VariableFile: variableFile,
+// // 	})
+
+// // 	outputBytes, err := os.ReadFile(output)
+// // 	errcheck.CheckTest(err, t)
+
+// // 	if string(outputBytes) != templateOutput {
+// // 		errcheck.CheckTest(errors.New("template output doesn't match the valid output"), t)
+
+// // 	}
+
+// // 	err = os.Remove(output)
+// // 	errcheck.CheckTest(err, t)
+// // }

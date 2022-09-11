@@ -8,7 +8,6 @@ import (
 
 	"github.com/pthomison/errcheck"
 	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v3"
 )
 
 var (
@@ -28,8 +27,6 @@ type TemplateArguments struct {
 	VariableFile string
 }
 
-type UnstructureVariableData map[interface{}]interface{}
-
 func init() {
 	rootCmd.AddCommand(templateCmd)
 
@@ -46,7 +43,7 @@ func cobraRun(cmd *cobra.Command, args []string) {
 func Run(args *TemplateArguments) {
 	fmt.Printf("Templating %s with %s into %s\n", args.Input, args.VariableFile, args.Output)
 
-	variableData := ReadVariableFile(args)
+	variableData := readYamlFile(args.VariableFile)
 
 	inputStat, err := os.Stat(args.Input)
 	errcheck.Check(err)
@@ -55,22 +52,18 @@ func Run(args *TemplateArguments) {
 		TemplateFile(args.Input, args.Output, variableData, inputStat.Mode())
 	} else {
 		fmt.Println("dir")
+
+		dir, err := os.Open(args.Input)
+		errcheck.Check(err)
+
+		recurseDir(dir, func(leafNode *os.File, outputLocation string, variableData UnstructureYamlData) {
+			return
+		})
+
 	}
 }
 
-func ReadVariableFile(args *TemplateArguments) UnstructureVariableData {
-	varBytes, err := os.ReadFile(args.VariableFile)
-	errcheck.Check(err)
-
-	varData := make(UnstructureVariableData)
-
-	err = yaml.Unmarshal(varBytes, &varData)
-	errcheck.Check(err)
-
-	return varData
-}
-
-func TemplateFile(infile string, outfile string, varData UnstructureVariableData, outperm os.FileMode) {
+func TemplateFile(infile string, outfile string, varData UnstructureYamlData, outperm os.FileMode) {
 	template, err := template.ParseFiles(infile)
 	errcheck.Check(err)
 
