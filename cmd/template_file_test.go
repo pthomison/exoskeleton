@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"bytes"
 	"errors"
 	"os"
 	"testing"
@@ -25,16 +24,16 @@ func TestTemplateSingleFile(t *testing.T) {
 		VariableFile: SingleFileVariableFilename,
 	})
 
-	outputBytes, err := os.ReadFile(SingleFileOutputFilename)
-	errcheck.CheckTest(err, t)
+	// outputBytes, err := os.ReadFile(SingleFileOutputFilename)
+	// errcheck.CheckTest(err, t)
 
-	outputCheckBytes, err := os.ReadFile(SingleFileOutputCheckFilename)
-	errcheck.CheckTest(err, t)
+	// outputCheckBytes, err := os.ReadFile(SingleFileOutputCheckFilename)
+	// errcheck.CheckTest(err, t)
 
-	if bytes.Compare(outputBytes, outputCheckBytes) != 0 {
+	if CompareFolders(SingleFileOutputFilename, SingleFileOutputCheckFilename) {
 		errcheck.CheckTest(errors.New("template output doesn't match the valid output"), t)
 	}
 
-	err = os.Remove(SingleFileOutputFilename)
+	err := os.Remove(SingleFileOutputFilename)
 	errcheck.CheckTest(err, t)
 }

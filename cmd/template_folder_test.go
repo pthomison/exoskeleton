@@ -1,61 +1,36 @@
 package cmd
 
-// import (
-// 	"errors"
-// 	"os"
-// 	"testing"
+import (
+	"errors"
+	"os"
+	"testing"
 
-// 	"github.com/pthomison/errcheck"
-// )
+	"github.com/pthomison/errcheck"
+)
 
-// const (
-// 	singleFolderFolder             = "tmp"
-// 	singleFolderName               = "/example"
-// 	singleFolderTemplateAlphaName  = singleFolderFolder + singleFolderName + "/fileAlpha.tpl"
-// 	singleFolderTemplateBetaName   = singleFolderFolder + singleFolderName + "/fileBeta.tpl"
-// 	singleFolderVariableFileName   = singleFolderFolder + singleFolderName + "/vars.yaml"
-// 	singleFolderTemplateOutputName = singleFolderFolder + singleFolderName + "/file.output"
+const (
+	singleFolder                      = "../resources/singleFolderTemplate/"
+	SingleFolderTemplateFoldername    = singleFolder + "template-folder"
+	SingleFolderVariableFilename      = singleFolder + "vars.yaml"
+	SingleFolderOutputFoldername      = singleFolder + "output-folder"
+	SingleFolderOutputCheckFoldername = singleFolder + "check-folder"
+)
 
-// 	singleFileTemplateAlpha = `console.log("{{.variableA}} + {{.variableB}}");`
-// 	singleFileTemplateBeta  = `console.log("{{.variableC}} + {{.variableD}}");`
+func TestTemplateSingleFolder(t *testing.T) {
 
-// 	singleFileVariableFile = `---
-// variableA: "alpha"
-// variableB: "beta"
-// variableC: "charlie"
-// variableD: "beta"
-// `
+	Run(&TemplateArguments{
+		Input:        SingleFolderTemplateFoldername,
+		Output:       SingleFolderOutputFoldername,
+		VariableFile: SingleFolderVariableFilename,
+	})
 
-// 	singleFileTemplateOutput = `console.log(\"alpha + beta\");`
+	// outputBytes, err := os.ReadFile(singleFileTemplateOutputName)
+	// errcheck.CheckTest(err, t)
 
-// 	singleFilePerms = 0750
-// )
+	if CompareFolders(SingleFolderOutputFoldername, SingleFolderOutputCheckFoldername) {
+		errcheck.CheckTest(errors.New("template output doesn't match the valid output"), t)
+	}
 
-// func TestTemplateSingleFile(t *testing.T) {
-
-// 	err := os.Mkdir(singleFileFolder, singleFilePerms)
-// 	errcheck.CheckTest(err, t)
-
-// 	err = os.WriteFile(singleFileTemplateName, []byte(singleFileTemplate), singleFilePerms)
-// 	errcheck.CheckTest(err, t)
-
-// 	err = os.WriteFile(singleFileVariableFileName, []byte(singleFileVariableFile), singleFilePerms)
-// 	errcheck.CheckTest(err, t)
-
-// 	Run(&TemplateArguments{
-// 		Input:        singleFileTemplateName,
-// 		Output:       singleFileTemplateOutputName,
-// 		VariableFile: singleFileVariableFileName,
-// 	})
-
-// 	outputBytes, err := os.ReadFile(singleFileTemplateOutputName)
-// 	errcheck.CheckTest(err, t)
-
-// 	if string(outputBytes) != templateOutput {
-// 		errcheck.CheckTest(errors.New("template output doesn't match the valid output"), t)
-
-// 	}
-
-// 	err = os.RemoveAll(singleFileFolder)
-// 	errcheck.CheckTest(err, t)
-// }
+	err := os.RemoveAll(SingleFolderOutputFoldername)
+	errcheck.CheckTest(err, t)
+}
