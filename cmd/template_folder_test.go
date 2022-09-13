@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/pthomison/errcheck"
+	"github.com/pthomison/fileutils"
 )
 
 const (
@@ -17,17 +18,13 @@ const (
 )
 
 func TestTemplateSingleFolder(t *testing.T) {
-
 	Run(&TemplateArguments{
 		Input:        SingleFolderTemplateFoldername,
 		Output:       SingleFolderOutputFoldername,
 		VariableFile: SingleFolderVariableFilename,
 	})
 
-	// outputBytes, err := os.ReadFile(singleFileTemplateOutputName)
-	// errcheck.CheckTest(err, t)
-
-	if CompareFolders(SingleFolderOutputFoldername, SingleFolderOutputCheckFoldername) {
+	if !fileutils.CompareFilepaths(SingleFolderOutputFoldername, SingleFolderOutputCheckFoldername) {
 		errcheck.CheckTest(errors.New("template output doesn't match the valid output"), t)
 	}
 
