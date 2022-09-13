@@ -2,6 +2,14 @@
 
 ## golang powered CLI tool for personal utilities
 
+### Install Instructions
+```
+brew tap pthomison/homebrew-tools
+brew install pthomison/tools/exoskeleton
+```
+
+### Top Level
+
 ```
 $ exoskeleton --help
 
