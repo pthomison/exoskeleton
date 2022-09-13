@@ -20,7 +20,7 @@ var (
 		Use:   "template",
 		Short: "Template Utility",
 		Long:  `template dir + yaml vars = magic`,
-		Run:   cobraRun,
+		Run:   templateRun,
 	}
 )
 
@@ -39,7 +39,7 @@ func init() {
 
 }
 
-func cobraRun(cmd *cobra.Command, args []string) {
+func templateRun(cmd *cobra.Command, args []string) {
 	Run(templateArgs)
 }
 
