@@ -6,6 +6,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 
 	"github.com/pthomison/errcheck"
@@ -18,21 +19,36 @@ const (
 )
 
 type Args struct {
-	Input        string
-	Output       string
-	VariableFile string
+	Input                string
+	Output               string
+	VariableFile         string
+	CommandLineVariables []string
 }
 
 func RegisterFlags(cmd *cobra.Command, cmdArgs *Args) {
 	cmd.PersistentFlags().StringVarP(&cmdArgs.Input, "input", "i", "", "file to template from")
 	cmd.PersistentFlags().StringVarP(&cmdArgs.Output, "output", "o", "", "location to output the rendered template")
 	cmd.PersistentFlags().StringVarP(&cmdArgs.VariableFile, "variable-file", "f", "", "file which contains yaml to inject into the template")
+	cmd.PersistentFlags().StringSliceVarP(&cmdArgs.CommandLineVariables, "var", "v", []string{}, "")
+
+	cmd.MarkPersistentFlagRequired("input")
+	cmd.MarkPersistentFlagRequired("output")
+
 }
 
 func Run(args *Args) {
 	fmt.Printf("Templating %s with %s into %s\n", args.Input, args.VariableFile, args.Output)
 
-	variableData := fileutils.ReadYamlFilepath(args.VariableFile)
+	var variableData fileutils.UnstructureYamlData
+
+	if args.VariableFile != "" {
+		variableData = fileutils.ReadYamlFilepath(args.VariableFile)
+	}
+
+	for _, v := range args.CommandLineVariables {
+		strs := strings.Split(v, "=")
+		variableData[strs[0]] = strs[1]
+	}
 
 	inputStat, err := os.Stat(args.Input)
 	errcheck.Check(err)
