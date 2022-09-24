@@ -1,4 +1,4 @@
-package cmd
+package template
 
 import (
 	"errors"
@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	baseFolder            = "../resources/nestedFolderTemplate/"
+	baseFolder            = "../../resources/nestedFolderTemplate/"
 	TemplateFoldername    = baseFolder + "template-folder"
 	VariableFilename      = baseFolder + "vars.yaml"
 	OutputFoldername      = baseFolder + "output-folder"
@@ -18,7 +18,7 @@ const (
 )
 
 func TestTemplateNestedFolder(t *testing.T) {
-	Run(&TemplateArguments{
+	Run(&Args{
 		Input:        TemplateFoldername,
 		Output:       OutputFoldername,
 		VariableFile: VariableFilename,

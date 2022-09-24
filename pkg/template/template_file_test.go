@@ -1,4 +1,4 @@
-package cmd
+package template
 
 import (
 	"errors"
@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	singleFileFolder              = "../resources/singleFileTemplate/"
+	singleFileFolder              = "../../resources/singleFileTemplate/"
 	SingleFileTemplateFilename    = singleFileFolder + "file.template.js"
 	SingleFileVariableFilename    = singleFileFolder + "vars.yaml"
 	SingleFileOutputFilename      = singleFileFolder + "file.output.js"
@@ -19,7 +19,7 @@ const (
 
 func TestTemplateSingleFile(t *testing.T) {
 
-	Run(&TemplateArguments{
+	Run(&Args{
 		Input:        SingleFileTemplateFilename,
 		Output:       SingleFileOutputFilename,
 		VariableFile: SingleFileVariableFilename,

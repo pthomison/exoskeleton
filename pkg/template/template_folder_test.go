@@ -1,4 +1,4 @@
-package cmd
+package template
 
 import (
 	"errors"
@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	singleFolder                      = "../resources/singleFolderTemplate/"
+	singleFolder                      = "../../resources/singleFolderTemplate/"
 	SingleFolderTemplateFoldername    = singleFolder + "template-folder"
 	SingleFolderVariableFilename      = singleFolder + "vars.yaml"
 	SingleFolderOutputFoldername      = singleFolder + "output-folder"
@@ -18,7 +18,7 @@ const (
 )
 
 func TestTemplateSingleFolder(t *testing.T) {
-	Run(&TemplateArguments{
+	Run(&Args{
 		Input:        SingleFolderTemplateFoldername,
 		Output:       SingleFolderOutputFoldername,
 		VariableFile: SingleFolderVariableFilename,
