@@ -11,7 +11,6 @@ brew install pthomison/tools/exoskeleton
 ### Top Level
 
 ```
-$ exoskeleton --help
 exoskeleton
 
 Usage:
@@ -30,13 +29,13 @@ Flags:
   -h, --help   help for exoskeleton
 
 Use "exoskeleton [command] --help" for more information about a command.
+
 ```
 
 
 ### Templating Tool
 
 ```
-$ exoskeleton template --help
 template
 
 Usage:
@@ -46,13 +45,14 @@ Flags:
   -h, --help                   help for template
   -i, --input string           file to template from
   -o, --output string          location to output the rendered template
+  -v, --var strings            
   -f, --variable-file string   file which contains yaml to inject into the template
+
 ```
 
 ### AWS SSM -> Kubernetes Secret Injection Tool
 
 ```
-$ exoskeleton ssm-k8s-injector --help
 ssm-k8s-injector
 
 Usage:
@@ -65,12 +65,12 @@ Flags:
   -k, --secret-key string      Secret to inject into
   -s, --secret-name string     Secret to inject into
   -p, --ssm-parameter string   Parameter to inject
+
 ```
 
 ### Semantic Version Versioning Tool
 
 ```
-$ exoskeleton rev --help
 rev
 
 Usage:
@@ -82,12 +82,12 @@ Flags:
   -x, --major          Rev the major version
   -y, --minor          Rev the minor version
   -z, --patch          Rev the patch version (default true)
+
 ```
 
 ### CryptoCurrency Pricing Tool (via CoinGecko APIs)
 
 ```
-$ exoskeleton ethprice --help
 ethprice
 
 Usage:
@@ -97,4 +97,5 @@ Flags:
       --coin string       coin to price (default "ethereum")
       --currency string   currency to price in (default "usd")
   -h, --help              help for ethprice
+
 ```
