@@ -2,6 +2,7 @@ package template
 
 import (
 	"bytes"
+	"encoding/base64"
 	"fmt"
 	"io/fs"
 	"os"
@@ -43,10 +44,12 @@ func Run(args *Args) {
 
 	if args.VariableFile != "" {
 		variableData = fileutils.ReadYamlFilepath(args.VariableFile)
+	} else {
+		variableData = make(fileutils.UnstructureYamlData)
 	}
 
 	for _, v := range args.CommandLineVariables {
-		strs := strings.Split(v, "=")
+		strs := strings.SplitN(v, "=", 2)
 		variableData[strs[0]] = strs[1]
 	}
 
@@ -77,7 +80,7 @@ func Run(args *Args) {
 }
 
 func TemplateFile(infile string, outfile string, varData fileutils.UnstructureYamlData, outperm os.FileMode) {
-	template, err := template.ParseFiles(infile)
+	template, err := AddTemplateFunctions(template.New(filepath.Base(infile))).ParseFiles(infile)
 	errcheck.Check(err)
 
 	outputBuffer := &bytes.Buffer{}
@@ -90,4 +93,18 @@ func TemplateFile(infile string, outfile string, varData fileutils.UnstructureYa
 
 	err = os.WriteFile(outfile, outputBuffer.Bytes(), outperm)
 	errcheck.Check(err)
+}
+
+func AddTemplateFunctions(t *template.Template) *template.Template {
+
+	fm := make(template.FuncMap)
+
+	base64Decode := func(b64 string) (string, error) {
+		data, err := base64.StdEncoding.DecodeString(b64)
+		return string(data), err
+	}
+
+	fm["base64Decode"] = base64Decode
+
+	return t.Funcs(fm)
 }
