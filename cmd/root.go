@@ -7,7 +7,7 @@ import (
 var (
 	rootCmd = &cobra.Command{
 		Use:   "exoskeleton",
-		Short: "exoskeleton",
+		Short: "exo",
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},
