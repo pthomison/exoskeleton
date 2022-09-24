@@ -25,7 +25,7 @@ GR=go run ./...
 
 # dog food
 generate-readme:
-	$(GR) template -i ./TEMPLATE.md -o ./README.md \
+	@$(GR) template -i ./TEMPLATE.md -o ./README.md \
 	-v 'ROOT_HELP=$(shell $(GR) --help | base64)' \
 	-v 'TEMPLATE_HELP=$(shell $(GR) template --help | base64)' \
 	-v 'INJECTOR_HELP=$(shell $(GR) ssm-k8s-injector --help | base64)' \
