@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	baseFolder            = "../../resources/nestedFolderTemplate/"
+	baseFolder            = "./resources/nestedFolderTemplate/"
 	TemplateFoldername    = baseFolder + "template-folder"
 	VariableFilename      = baseFolder + "vars.yaml"
 	OutputFoldername      = baseFolder + "output-folder"

@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	singleFileFolder              = "../../resources/singleFileTemplate/"
+	singleFileFolder              = "./resources/singleFileTemplate/"
 	SingleFileTemplateFilename    = singleFileFolder + "file.template.js"
 	SingleFileVariableFilename    = singleFileFolder + "vars.yaml"
 	SingleFileOutputFilename      = singleFileFolder + "file.output.js"

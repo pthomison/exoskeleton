@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	singleFolder                      = "../../resources/singleFolderTemplate/"
+	singleFolder                      = "./resources/singleFolderTemplate/"
 	SingleFolderTemplateFoldername    = singleFolder + "template-folder"
 	SingleFolderVariableFilename      = singleFolder + "vars.yaml"
 	SingleFolderOutputFoldername      = singleFolder + "output-folder"
