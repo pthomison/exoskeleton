@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/pthomison/exoskeleton/pkg/rev"
 	"github.com/spf13/cobra"
 )
@@ -21,5 +23,5 @@ func init() {
 }
 
 func revRun(cmd *cobra.Command, args []string) {
-	rev.Run(revArguments)
+	rev.Run(revArguments, os.Stdout)
 }

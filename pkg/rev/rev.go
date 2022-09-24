@@ -2,6 +2,7 @@ package rev
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 	"strconv"
@@ -31,42 +32,42 @@ func RegisterFlags(cmd *cobra.Command, cmdArgs *Args) {
 	cmd.PersistentFlags().StringVarP(&cmdArgs.Input, "input", "i", "", "file to template from")
 	cmd.PersistentFlags().BoolVarP(&cmdArgs.MajorRev, "major", "x", false, "Rev the major version")
 	cmd.PersistentFlags().BoolVarP(&cmdArgs.MinorRev, "minor", "y", false, "Rev the minor version")
-	cmd.PersistentFlags().BoolVarP(&cmdArgs.PatchRev, "patch", "z", false, "Rev the patch version")
+	cmd.PersistentFlags().BoolVarP(&cmdArgs.PatchRev, "patch", "z", true, "Rev the patch version")
 }
 
-func Run(args *Args) {
+func Run(args *Args, output io.Writer) {
+
+	byteToInt := func(b []byte) int {
+		str := string(b)
+		i, err := strconv.Atoi(str)
+		errcheck.Check(err)
+
+		return i
+	}
+
 	matches := versionRegex.FindSubmatch([]byte(args.Input))
 
 	if len(matches) != 5 {
-		fmt.Println("Input does not match SemVer Input Regex")
+		fmt.Fprintf(output, "Input does not match SemVer Input Regex: %s\n", InputRegex)
 		os.Exit(1)
 	}
 
 	prefixString := string(matches[1])
 
-	majorString := string(matches[2])
-	majorInt, err := strconv.Atoi(majorString)
-	errcheck.Check(err)
-
-	minorString := string(matches[3])
-	minorInt, err := strconv.Atoi(minorString)
-	errcheck.Check(err)
-
-	patchString := string(matches[4])
-	patchInt, err := strconv.Atoi(patchString)
-	errcheck.Check(err)
+	majorInt := byteToInt(matches[2])
+	minorInt := byteToInt(matches[3])
+	patchInt := byteToInt(matches[4])
 
 	if args.MajorRev {
 		majorInt = majorInt + 1
-	}
-
-	if args.MinorRev {
+		minorInt = 0
+		patchInt = 0
+	} else if args.MinorRev {
 		minorInt = minorInt + 1
-	}
-
-	if args.PatchRev {
+		patchInt = 0
+	} else if args.PatchRev {
 		patchInt = patchInt + 1
 	}
 
-	fmt.Printf("%s%d.%d.%d\n", prefixString, majorInt, minorInt, patchInt)
+	fmt.Fprintf(output, "%s%d.%d.%d\n", prefixString, majorInt, minorInt, patchInt)
 }
