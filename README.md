@@ -12,15 +12,19 @@ brew install pthomison/tools/exoskeleton
 
 ```
 $ exoskeleton --help
+exoskeleton
 
 Usage:
   exoskeleton [flags]
   exoskeleton [command]
 
 Available Commands:
-  completion  Generate the autocompletion script for the specified shell
-  help        Help about any command
-  template    Template Utility
+  completion       Generate the autocompletion script for the specified shell
+  ethprice         ethprice
+  help             Help about any command
+  rev              rev
+  ssm-k8s-injector ssm-k8s-injector
+  template         template
 
 Flags:
   -h, --help   help for exoskeleton
@@ -33,8 +37,7 @@ Use "exoskeleton [command] --help" for more information about a command.
 
 ```
 $ exoskeleton template --help
-
-template dir + yaml vars = magic
+template
 
 Usage:
   exoskeleton template [flags]
@@ -50,7 +53,6 @@ Flags:
 
 ```
 $ exoskeleton ssm-k8s-injector --help
-
 ssm-k8s-injector
 
 Usage:
@@ -63,5 +65,36 @@ Flags:
   -k, --secret-key string      Secret to inject into
   -s, --secret-name string     Secret to inject into
   -p, --ssm-parameter string   Parameter to inject
+```
 
+### Semantic Version Versioning Tool
+
+```
+$ exoskeleton rev --help
+rev
+
+Usage:
+  exoskeleton rev [flags]
+
+Flags:
+  -h, --help           help for rev
+  -i, --input string   file to template from
+  -x, --major          Rev the major version
+  -y, --minor          Rev the minor version
+  -z, --patch          Rev the patch version (default true)
+```
+
+### CryptoCurrency Pricing Tool (via CoinGecko APIs)
+
+```
+$ exoskeleton ethprice --help
+ethprice
+
+Usage:
+  exoskeleton ethprice [flags]
+
+Flags:
+      --coin string       coin to price (default "ethereum")
+      --currency string   currency to price in (default "usd")
+  -h, --help              help for ethprice
 ```
