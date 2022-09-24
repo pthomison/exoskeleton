@@ -21,7 +21,6 @@ func RevTest(t *testing.T, args *Args, validOutput string) {
 	output = strings.Replace(output, "\n", "", 1)
 
 	if output != validOutput {
-
 		errString := fmt.Sprintf("rev output doesn't match validation answers (%s vs %s)", validOutput, output)
 		errcheck.CheckTest(errors.New(errString), t)
 	}

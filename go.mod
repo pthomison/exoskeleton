@@ -34,6 +34,7 @@ require (
 	github.com/pthomison/awsutils v0.0.2 // indirect
 	github.com/pthomison/k8sutils v0.0.2 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/superoo7/go-gecko v1.0.0 // indirect
 	golang.org/x/net v0.0.0-20220923203811-8be639271d50 // indirect
 	golang.org/x/oauth2 v0.0.0-20220909003341-f21342109be1 // indirect
 	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
