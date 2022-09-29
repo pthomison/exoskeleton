@@ -7,10 +7,11 @@ require (
 	github.com/pthomison/fileutils v0.0.1
 	github.com/pthomison/ssm-k8s-injector v0.1.0
 	github.com/spf13/cobra v1.5.0
+	github.com/superoo7/go-gecko v1.0.0
 )
 
 require (
-	github.com/aws/aws-sdk-go v1.44.105 // indirect
+	github.com/aws/aws-sdk-go v1.44.108 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/emicklei/go-restful/v3 v3.9.0 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
@@ -34,10 +35,9 @@ require (
 	github.com/pthomison/awsutils v0.0.2 // indirect
 	github.com/pthomison/k8sutils v0.0.2 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/superoo7/go-gecko v1.0.0 // indirect
-	golang.org/x/net v0.0.0-20220923203811-8be639271d50 // indirect
+	golang.org/x/net v0.0.0-20220927171203-f486391704dc // indirect
 	golang.org/x/oauth2 v0.0.0-20220909003341-f21342109be1 // indirect
-	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
+	golang.org/x/sys v0.0.0-20220928140112-f11e5e49a4ec // indirect
 	golang.org/x/term v0.0.0-20220919170432-7a66f970e087 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20220922220347-f3bd1da661af // indirect
@@ -50,7 +50,7 @@ require (
 	k8s.io/apimachinery v0.25.2 // indirect
 	k8s.io/client-go v0.25.2 // indirect
 	k8s.io/klog/v2 v2.80.1 // indirect
-	k8s.io/kube-openapi v0.0.0-20220803164354-a70c9af30aea // indirect
+	k8s.io/kube-openapi v0.0.0-20220928191237-829ce0c27909 // indirect
 	k8s.io/utils v0.0.0-20220922133306-665eaaec4324 // indirect
 	sigs.k8s.io/json v0.0.0-20220713155537-f223a00ba0e2 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
