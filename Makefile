@@ -17,7 +17,7 @@ delve-test:
 	dlv test ./cmd
 
 # dog food
-NEXT_TAG=$(shell $(EXOSKELETON) rev -i $(shell git tag --list | tail -n 1))
+NEXT_TAG=$(shell $(EXOSKELETON) rev -i $(shell git tag --list --sort version:refname | tail -n 1))
 release:
 	git tag $(NEXT_TAG)
 	git push origin $(NEXT_TAG)
