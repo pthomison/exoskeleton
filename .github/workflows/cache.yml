@@ -27,5 +27,3 @@ jobs:
           distribution: goreleaser
           version: latest
           args: build --snapshot --rm-dist
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
