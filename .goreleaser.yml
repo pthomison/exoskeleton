@@ -1,4 +1,4 @@
-project_name: exo
+project_name: exoskeleton
 
 builds:
   - env:
@@ -22,6 +22,10 @@ brews:
   - tap:
       owner: pthomison
       name: homebrew-tools
+
+    install:
+      bin.install "exoskeleton"
+      ln_s bin/"exoskeleton", bin/"exo"
 
 nfpms:
   - 
