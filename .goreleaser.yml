@@ -23,7 +23,7 @@ brews:
       owner: pthomison
       name: homebrew-tools
 
-    install:
+    install: |
       bin.install "exoskeleton"
       ln_s bin/"exoskeleton", bin/"exo"
 
