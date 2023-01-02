@@ -6,7 +6,7 @@ on:
       - 'main'
 
 jobs:
-  goreleaser:
+  cache:
     runs-on: ubuntu-latest
     steps:
       -
